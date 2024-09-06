@@ -25,18 +25,18 @@ console.log(squareEls);
 console.log(messageEl);
 
 /*-------------------------------- Functions --------------------------------*/
-const init = ()=> {
+
+const init = () => {
 board =["","","","","","","","",""];
 turn = "X";
  winner = false;
- tie= false;
- console.log('init function called'); 
+ tie= true;
 };
+
 init();
 
-
 const updateBoard = () => {
-    board.forEach((value, index) => {
+    board.forEach((value, index,) => {
 const square = squareEls[index]
 square.textContent = value;
 if(value === "X") {
@@ -52,8 +52,8 @@ if(value === "X") {
 const updateMessage = () => {
     if ( winner === false && tie === false) {
         messageEl.textContent= "It's ${turn}'s turn";
-    } else if (winner === false && tie === true){
-        messageEl.textContent= "It's a tie";
+    } else if (winner === false && tie === true) {
+        messageEl.textContent= "It's a tie!";
     }else {
         messageEl.textContent= "Congratulations you have won";
     };
@@ -63,9 +63,7 @@ const render =() => {
     updateBoard ();
     updateMessage ();
 };
-
-render();
-
+render()
 const handleClick = (event) => {
     
 }
