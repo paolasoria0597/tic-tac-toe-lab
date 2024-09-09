@@ -1,4 +1,4 @@
-/*-------------------------------- Constants --------------------------------*/
+
 const winningCombos = [
     [0, 1, 2],
     [3, 4, 5],
@@ -9,28 +9,25 @@ const winningCombos = [
     [0, 4, 8],
     [2, 4, 6],
 ]
-    // and so on
+
   
 
-/*---------------------------- Variables (state) ----------------------------*/
 let board;
 let turn;
 let winner =false
 let tie = false
 
-/*------------------------ Cached Element References ------------------------*/
 const squareEls = document.querySelectorAll('.sqr');
 const messageEl = document.querySelector('#message');
 console.log(squareEls);
 console.log(messageEl);
 
-/*-------------------------------- Functions --------------------------------*/
 
 const init = () => {
 board =["","","","","","","","",""];
 turn = "X";
  winner = false;
- tie= true;
+ tie= false;
 };
 
 init();
@@ -51,7 +48,7 @@ if(value === "X") {
 
 const updateMessage = () => {
     if ( winner === false && tie === false) {
-        messageEl.textContent= "It's ${turn}'s turn";
+        messageEl.textContent= `It's ${turn}'s turn`;
     } else if (winner === false && tie === true) {
         messageEl.textContent= "It's a tie!";
     }else {
@@ -59,15 +56,80 @@ const updateMessage = () => {
     };
 };
 
+const placePiece = (index) => {
+    board[index]= turn
+}
+
+const checkForWinner = () =>{
+    for (let i=0; i< winningCombos.length; i++) {
+        if(board[winningCombos[i][0]].length>0) {
+            if (board [winningCombos[i] [0] ]=== board[winningCombos[i][1]]){
+                if (board[winningCombos[i][0]]=== board[winningCombos[i][2]]) {
+                    winner = true; 
+                    console.log(winner)
+                }
+        
+        }
+        }
+    }};
+
+    const checkForTie = () => {
+        console.log('ghdjfkg')
+        if (winner) return
+        if (!board.includes("")) tie = true;
+
+    }
+    
+    const switchPlayerTurn= () => {
+        if (winner) return;
+        if (turn === 'X') {
+           turn = 'O'
+            } else {
+                turn = 'X'
+            }
+            }
+    
+    
+
+
+
+const handleClick = (event) => { 
+    if(winner === true){
+        return
+    }
+    if (event.target.classList.contains ('sqr')){
+        const squareIndex = event.target.id
+        if (board[squareIndex] ==='X' || board[squareIndex] === 'O') {
+        return
+        }
+        
+        placePiece(squareIndex)
+
+    }
+    checkForWinner()
+    checkForTie()
+    switchPlayerTurn()
+    render()
+    return
+}
+
 const render =() => {
     updateBoard ();
     updateMessage ();
+//    handleClick()
 };
 render()
-const handleClick = (event) => {
+
+document.querySelector('.board').addEventListener('click', handleClick)
+
+const resetBtnEl = document.querySelector('#reset');
+resetBtnEl.addEventListener('click',init);
     
-}
-/*----------------------------- Event Listeners -----------------------------*/
+window.onload = () => {
+    init();
+  }
+
+
 
 
 
